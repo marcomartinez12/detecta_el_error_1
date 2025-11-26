@@ -1,0 +1,429 @@
+
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Roboto+Mono:wght@500&display=swap');
+
+        :root {
+            /* Paleta Verde Viva para Educación */
+            --color-bg: #e8f5e9;
+            --color-container: #ffffff;
+            --color-text: #1b5e20;
+            
+            --color-title: #2e7d32;
+            --color-primary-action: #66bb6a; 
+            --color-primary-action-dark: #43a047;
+            
+            --color-correct: #4caf50;
+            --color-correct-bg: #c8e6c9;
+            
+            --color-incorrect: #ff5252;
+            --color-incorrect-bg: #ffcdd2;
+            
+            --color-neutral-button: #81c784;
+            --color-neutral-button-hover: #66bb6a;
+            
+            --color-equation-bg: #f1f8e9;
+            --color-shadow: rgba(46, 125, 50, 0.2);
+            
+            /* Duración de las transiciones */
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #059669;
+            color: var(--color-text);
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- Contenedor Principal de la Actividad --- */
+        .activity-container {
+            background-color: var(--color-container);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--color-shadow);
+            padding: 2rem 2.5rem;
+            width: 100%;
+            max-width: 600px;
+            overflow: hidden;
+            border: 3px solid var(--color-primary-action);
+            position: relative;
+        }
+
+        /* --- NUEVO: Pantalla de Conteo --- */
+        #countdown-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #10b981;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-radius: 20px;
+        }
+
+        #countdown-screen.active {
+            display: flex;
+        }
+
+        .countdown-number {
+            font-size: 8rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: countdown-pop 0.8s ease-out;
+        }
+
+        @keyframes countdown-pop {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .countdown-go {
+            font-size: 6rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: go-bounce 0.6s ease-out;
+        }
+
+        @keyframes go-bounce {
+            0% {
+                transform: scale(0.5) rotate(-10deg);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.15) rotate(5deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* --- Pantalla de Introducción y Juego (Animación de transición) --- */
+        #intro-screen {
+            text-align: center;
+            padding: 2rem 1rem;
+            transition: opacity var(--transition-speed) ease-out, transform var(--transition-speed) ease-out;
+        }
+
+        #game-screen {
+            display: none; 
+            opacity: 0;
+            transform: translateY(20px); 
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        #game-screen.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Estilos de Introducción --- */
+        #intro-screen h2 {
+            color: var(--color-title);
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        #intro-screen p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: left;
+            margin-bottom: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        #intro-screen strong {
+            color: var(--color-primary-action-dark);
+            font-weight: 700;
+        }
+
+        #intro-screen ul {
+            text-align: left;
+            padding-left: 2rem;
+        }
+
+        #intro-screen li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .start-button {
+            background-color: var(--color-primary-action);
+            color: white;
+            border: none;
+            border-bottom: 5px solid var(--color-primary-action-dark);
+            border-radius: 12px;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.3rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            margin-top: 1rem;
+            box-shadow: 0 4px 15px rgba(102, 187, 106, 0.3);
+        }
+
+        .start-button:hover {
+            background-color: #81c784;
+            transform: translateY(-3px);
+            border-bottom-width: 8px;
+            box-shadow: 0 6px 20px rgba(102, 187, 106, 0.4);
+        }
+        
+        .start-button:active {
+            transform: translateY(1px);
+            border-bottom-width: 4px;
+        }
+
+        /* --- Título del Juego --- */
+        #activity-title {
+            color: var(--color-title);
+            font-weight: 900;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #problem-description {
+            color: var(--color-text);
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Estilos del Temporizador con Animación --- */
+        .timer-container {
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--color-text);
+        }
+        #timer-display {
+            color: var(--color-primary-action); 
+            font-size: 1.4em;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background-color: var(--color-equation-bg);
+            border: 2px solid var(--color-primary-action);
+            transition: all 0.5s ease-in-out; 
+            display: inline-block;
+            font-weight: 900;
+        }
+        #timer-display.low {
+            color: var(--color-incorrect);
+            border-color: var(--color-incorrect);
+            animation: pulse-danger 0.7s infinite alternate; 
+        }
+
+        @keyframes pulse-danger {
+            from {
+                transform: scale(1);
+                box-shadow: 0 0 0px var(--color-incorrect);
+            }
+            to {
+                transform: scale(1.08);
+                box-shadow: 0 0 15px rgba(255, 82, 82, 0.5);
+            }
+        }
+
+        /* --- Estilos de la Ecuación --- */
+        .equation-container {
+            background-color: var(--color-equation-bg);
+            border-left: 5px solid var(--color-primary-action);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.15rem;
+            box-shadow: 0 2px 10px rgba(46, 125, 50, 0.1);
+        }
+
+        .equation-container div {
+            padding: 8px 0;
+            border-bottom: 1px dotted #a5d6a7;
+        }
+
+        .equation-container div:last-child {
+            border-bottom: none;
+        }
+        
+        .equation-container .original-equation {
+            font-weight: 700;
+            color: var(--color-title);
+        }
+
+        .question {
+            font-weight: 900;
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--color-title);
+        }
+
+        /* --- Botones de Opción --- */
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .option-button {
+            background-color: var(--color-primary-action);
+            color: white;
+            border: none;
+            border-bottom: 4px solid var(--color-primary-action-dark);
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 900;
+            font-family: 'Nunito', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            box-shadow: 0 3px 10px rgba(102, 187, 106, 0.3);
+        }
+
+        .option-button:hover:not(:disabled) {
+            background-color: #81c784;
+            transform: translateY(-3px) scale(1.02);
+            border-bottom-width: 6px;
+            box-shadow: 0 5px 15px rgba(102, 187, 106, 0.4);
+        }
+        
+        .option-button:active:not(:disabled) {
+            transform: translateY(1px);
+            border-bottom-width: 3px;
+        }
+
+        .option-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .option-button.correct {
+            background-color: var(--color-correct);
+            border-bottom-color: #388e3c;
+            color: white;
+            animation: correct-bounce 0.4s ease-out; 
+        }
+        
+        .option-button.incorrect {
+            background-color: var(--color-incorrect);
+            border-bottom-color: #d32f2f;
+            color: white;
+            animation: incorrect-shake 0.4s ease-out;
+        }
+
+        @keyframes correct-bounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes incorrect-shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        /* --- Contenedor de Retroalimentación con Animación --- */
+        .feedback-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 5px solid;
+            
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feedback-container.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feedback-container.correct {
+            background-color: var(--color-correct-bg);
+            border-color: var(--color-correct);
+        }
+        
+        .feedback-container.incorrect {
+            background-color: var(--color-incorrect-bg);
+            border-color: var(--color-incorrect);
+        }
+        
+        #feedback-title {
+            margin-top: 0;
+            font-size: 1.4rem;
+            font-weight: 900;
+        }
+        
+        .feedback-container.correct #feedback-title {
+            color: var(--color-correct);
+        }
+
+        .feedback-container.incorrect #feedback-title {
+            color: var(--color-incorrect);
+        }
+        
+        #feedback-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--color-text);
+        }
+        
+        #feedback-text strong {
+            color: var(--color-title);
+            font-weight: 700;
+        }
+
+        /* Botón de Siguiente con transición */
+        #next-button {
+            display: none;
+            width: 100%;
+            margin-top: 1rem;
+            background-color: var(--color-neutral-button);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 900;
+            cursor: pointer;
+            border-bottom: 4px solid var(--color-neutral-button-hover);
+            transition: all 0.2s ease-out;
+            box-shadow: 0 3px 10px rgba(129, 199, 132, 0.3);
+        }
+        
+        #next-button:hover {
+            background-color: var(--color-neutral-button-hover);
+            transform: translateY(-2px);
+            border-bottom-width: 6px;
+            box-shadow: 0 5px 15px rgba(129, 199, 132, 0.4);
+        }
+
+        #next-button:active {
+            transform: translateY(1px);
+            border-bottom-width: 3px;
+        }
+
+    
